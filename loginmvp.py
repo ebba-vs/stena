@@ -16,8 +16,7 @@ options = Options()
 options.add_argument("--start-maximized")
 service = Service()
 driver = webdriver.Chrome(service=service, options=options)
-
-try:
+3 files to stena repo"try:
     driver.get(LOGIN_URL)
     wait = WebDriverWait(driver, 10)
 
