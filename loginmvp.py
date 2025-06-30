@@ -16,7 +16,8 @@ options = Options()
 options.add_argument("--start-maximized")
 service = Service()
 driver = webdriver.Chrome(service=service, options=options)
-3 files to stena repo"try:
+
+try:
     driver.get(LOGIN_URL)
     wait = WebDriverWait(driver, 10)
 
@@ -31,13 +32,21 @@ driver = webdriver.Chrome(service=service, options=options)
 
     # === VÄNTA OCH BEKRÄFTA INLOGGNING ===
     time.sleep(5)
+    
+# Switch to the newly opened tab
+    driver.switch_to.window(driver.window_handles[-1])
+    print("Switched to MainPage tab:", driver.current_url)
+   
 
     # Kontrollera om ett element som bara finns efter inloggning är synligt
     try:
-        wait.until(EC.presence_of_element_located((By.ID, "inleveranserFBpLiMenu")))  # exempel-ID
-        print("✅ Inloggning lyckades!")
+        inleveranser_link = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "Inleveranser"))
+        )
+        print("Inloggning lyckades och Inleveranser hittades!")
     except:
-        print("⚠️ Inloggning misslyckades eller elementet hittades inte.")
+        print("Inloggning lyckades men Inleveranser hittades inte.")
+
 
     # Kommentera ut detta för att hålla webbläsaren öppen
     # driver.quit()
